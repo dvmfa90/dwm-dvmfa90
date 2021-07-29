@@ -1,0 +1,104 @@
+#+TITLE: dwm-dvmfa90
+
+Dwm is an extremely fast, small, and dynamic window manager for X. Dwm is created by [suckless.org](https://suckless.org).  This is my personal build of dwm.
+
+My version of DWM is patched so you can use an alternative bar instead of
+using dwm default one.
+
+** The patches I added
+
++ attachaside ---> Make new clients get attached and focused in the stacking area instead of always becoming the new master
++ cyclelayouts ---> Cycles through all avaiable layouts
++ restartsig ---> dwm can now be restarted
++ movestack ---> This plugin allows you to move clients around in the stack and swap them with the master.
++ uselessgap ---> adds "useless gaps" around windows
++ moveresize ---> This changes allows you to move and resize dwm's clients using keyboard bindings.
++ anybar ---> dwm-anybar is a patch for dwm that enables dwm to manage external status bars such as lemonbar and polybar. dwm treats the external bar as it would its own, so all regular dwm commands such as togglebar affect the external bar in the same way.
++ IPC ---> dwm-ipc is a patch for dwm that implements inter-process communication through a UNIX socket. This allows you to query the window manager for information, listen for events such as tag changes or layout changes, as well as send commands to control the window manager from other programs/scripts.
+
+** Layouts
+
++ Stacked
++ Floating
++ Monocle --> Fullscreen
++ Grid
++ Centered Master
++ Centered with Floating master
+
+** Dependencies
+
++ alacritty ---> A fast, cross-platform, OpenGL terminal emulator
++ yajl ---> a tiny C JSON library. Required due to IPC module.
+
+* Installing
+
+# Install dependencies
+
+sudo pacman -S yajl alacritty
+
+Create folder to have dwm source folder
+
+mkdir "name"
+ex: mkdir apps
+
+# Go to created directory and clone dwm
+
+cd "name"
+ex: cd apps
+
+git clone https://github.com/dvmfa90/dwm-dvmfa90.git
+
+cd dwm-dvmfa90
+
+sudo make install
+
+
+* My Keybindings
+
+** Main Keybindings
+
+| Keybinding               | Action                                                       |
+|--------------------------+--------------------------------------------------------------|
+| MODKEY + SHIFT + RETURN  | opens terminal (alacritty but can be easily changed)         |
+| MODKEY + P               | opens run launcher (dmenu but can be changed)                |
+| MODKEY + c               | closes window with focus                                     |
+| MODKEY + SHIFT + r       | restarts dwm                                                 |
+| MODKEY + SHIFT + q       | quits dwm                                                    |
+| MODKEY + b               | hides the bar                                                |
+| ALT    + 1-9             | switch focus to workspace (1-9)                              |
+| ALT    + 1-9 NUMPAD      | switch focus to workspace (1-9)                              |
+| ALT + SHIFT + 1-9        | send focused window to workspace (1-9)                       |
+| ALT + SHIFT + 1-9 NUMPAD | send focused window to workspace (1-9)                       |
+| MODKEY + h               | focus stack +1 (switches focus between windows in the stack) |
+| MODKEY + l               | focus stack -1 (switches focus between windows in the stack) |
+| MODKEY + SHIFT + j       | rotate stack +1 (rotates the windows in the stack)           |
+| MODKEY + SHIFT + k       | rotate stack -1 (rotates the windows in the stack)           |
+| MODKEY + ALT + h         | setmfact -0.05 (expands size of window)                      |
+| MODKEY + ALT + l         | setmfact +0.05 (shrinks size of window)                      |
+| ALT + l                  | focusmon +1 (switches focus next monitors)                   |
+| ALT + h                  | focusmon -1 (switches focus to prev monitors)                |
+| MODKEY + .               | Cycle Layout to next                                         |
+| MODKEY + ,               | Cycle Layoutt to previous                                    |
+| MODKEY + y               | Set layout stacked                                           |
+| MODKEY + M               | Set Monocle Layout                                           |
+
+
+
+
+* Running dwm
+If you do not use a login manager (such as lightdm) then you can add the following line to your .xinitrc to start dwm using startx:
+
+=exec dwm=
+
+If you use a login manager (like lightdm), make sure that you have a file called dwm.desktop in your /usr/share/xsessions/ directory.  It should look something like this:
+
+#+begin_example
+[Desktop Entry]
+Encoding=UTF-8
+Name=Dwm
+Comment=Dynamic window manager
+Exec=dwm
+Icon=dwm
+Type=XSession
+#+end_example
+
